@@ -1,0 +1,11 @@
+{% macro link_to(endpoint, text, tag_class=None, tag_id=None) -%}
+		<a href="{{ url_for(endpoint, **kwargs) }}" 
+				{% if tag_class %} 
+						class="{{ tag_class }}"
+				{% endif %}
+				{% if tag_id %}
+						id="{{ tag_id }}"
+				{% endif %}>
+				{{ text|safe }}
+		</a>		
+{%- endmacro %}

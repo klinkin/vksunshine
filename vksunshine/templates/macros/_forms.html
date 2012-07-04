@@ -1,0 +1,57 @@
+{% macro render_errors(field) %}
+		{% if field.errors %}
+				<ul class="errorlist">
+				    {% for error in field.errors %}
+						    <li>{{ error }}</li>
+				    {% endfor %}
+				</ul>
+		{% endif %}
+{% endmacro %}
+
+{% macro render_field(field) %}
+		{% if field.type == 'SubmitField' %}
+			  {{ field(**kwargs)|safe }}				
+		{% else %}
+				{% if field.type == 'BooleanField' %}
+						<p class="checkbox">
+								<label for="id_{{ field.name }}">
+										{{ field|safe }} {{ field.label.text }}
+								</label>
+						</p>
+				{% else %}
+						<p>
+				        {{ field.label }}
+				        {{ field(**kwargs)|safe }}
+						</p>
+			  {% endif %}
+	  {% endif %}
+{% endmacro %}
+
+{% macro render_form(form, title) %}
+<form action="" method="post">
+	{{ form.hidden_fields() }}
+  <fieldset>
+    <legend>{{ title }}</legend>
+        {% for field in form if not field.type == 'SubmitField' and not field.type == 'HiddenField' and not field.type == 'CSRFTokenField'%}
+		        {{ render_errors(field)  }}
+		        {{ render_field(field)   }}
+		    {% endfor %}
+  </fieldset>
+  {{ render_field(form.submit) }}
+</form>
+{% endmacro %}
+
+{% macro render_flashed_messages() %}
+		{% with messages = get_flashed_messages(with_categories=True) %}
+		  {% if messages %}
+		    {% for category, message in messages %}
+		    <div class="flash{% if category %} flash[[ category|title ]]{% endif %}">
+		        {% if category == 'error' %}
+				        <h1 class="in h3">Error</h1>
+		        {% endif %}
+		        <p class="in">{{ message }}</p>
+		    </div>
+		    {% endfor %}
+		  {% endif %}
+		{% endwith %}
+{% endmacro %}

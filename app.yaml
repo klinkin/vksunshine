@@ -1,0 +1,145 @@
+application: vkontaktesunshine
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+# In production, uncomment line below.
+# default_expiration: "30d"
+
+skip_files:
+- ^(.*/)?app\.yaml
+- ^(.*/)?app\.yml
+- ^(.*/)?index\.yaml
+- ^(.*/)?index\.yml
+- ^(.*/)?#.*#
+- ^(.*/)?.*~
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*/RCS/.*
+- ^(.*/)?\..*
+- ^(.*/)?tests$
+
+builtins:
+- appstats: on
+- remote_api: on
+
+
+handlers:
+
+- url: /remote_api
+  script: google.appengine.ext.remote_api.handler.application
+  login: admin
+
+- url: /apple-touch-icon\.png
+  mime_type: image/png
+  static_files: static/apple-touch-icon.png
+  upload: static/apple-touch-icon.png
+
+- url: /favicon\.ico
+  mime_type: image/png
+  static_files: static/favicon.ico
+  upload: static/favicon.ico
+
+- url: /(robots\.txt|humans\.txt|crossdomain\.xml)
+  static_files: static/\1
+  upload: static/(robots\.txt|humans\.txt|crossdomain\.xml)
+
+- url: /static/css/(.*\.css)
+  mime_type: text/css
+  static_files: static/css/\1
+  upload: static/css/(.*\.css)
+
+- url: /static/css/Aristo/(.*\.css)
+  mime_type: text/css
+  static_files: static/css/Aristo/\1
+  upload: static/css/Aristo/(.*\.css)
+
+- url: /static/datatables/css/(.*\.css)
+  mime_type: text/css
+  static_files: static/datatables/css/\1
+  upload: static/datatables/css/(.*\.css)
+
+- url: /static/datatables/extras/ColVis/media/css/(.*\.css)
+  mime_type: text/css
+  static_files: static/datatables/extras/ColVis/media/css/\1
+  upload: static/datatables/extras/ColVis/media/css/(.*\.css)
+
+- url: /static/datatables/extras/TableTools/media/css/(.*\.css)
+  mime_type: text/css
+  static_files: static/datatables/extras/TableTools/media/css/\1
+  upload: static/datatables/extras/TableTools/media/css/(.*\.css)
+
+- url: /static/datatables/plugins/jquery-datatables-editable/media/css/(.*\.css)
+  mime_type: text/css
+  static_files: static/datatables/plugins/jquery-datatables-editable/media/css/\1
+  upload: static/datatables/plugins/jquery-datatables-editable/media/css/(.*\.css)
+
+- url: /static/css/img/(.*\.(gif|png|jpg))
+  static_files: static/css/img/\1
+  upload: static/css/img/(.*\.(gif|png|jpg))
+
+
+- url: /static/css/Aristo/images/(.*\.(gif|png|jpg))
+  static_files: static/css/Aristo/images/\1
+  upload: static/css/Aristo/images/(.*\.(gif|png|jpg))
+
+- url: /static/css/fonts/(.*\.(eot|svg|ttf|woff))
+  static_files: static/css/fonts/\1
+  upload: static/css/fonts/(.*\.(eot|svg|ttf|woff))
+
+- url: /static/js/(.*\.js)
+  mime_type: text/javascript
+  static_files: static/js/\1
+  upload: static/js/(.*\.js)
+
+- url: /static/datatables/js/(.*\.js)
+  mime_type: text/javascript
+  static_files: static/datatables/js/\1
+  upload: static/datatables/js/(.*\.js)
+
+- url: /static/datatables/extras/ColVis/media/js/(.*\.js)
+  mime_type: text/javascript
+  static_files: static/datatables/extras/ColVis/media/js/\1
+  upload: static/datatables/extras/ColVis/media/js/(.*\.js)
+
+- url: /static/datatables/extras/TableTools/media/js/(.*\.js)
+  mime_type: text/javascript
+  static_files: static/datatables/extras/TableTools/media/js/\1
+  upload: static/datatables/extras/TableTools/media/js/(.*\.js)
+
+- url: /static/datatables/plugins/jquery-datatables-editable/media/js/(.*\.js)
+  mime_type: text/javascript
+  static_files: static/datatables/plugins/jquery-datatables-editable/media/js/\1
+  upload: static/datatables/plugins/jquery-datatables-editable/media/js/(.*\.js)
+
+
+- url: /static/(.*\.html)
+  mime_type: text/html
+  static_files: static/\1
+  upload: static/(.*\.html)
+
+- url: /static/(.*\.json)
+  mime_type: application/json
+  static_files: static/\1
+  upload: static/(.*\.json)
+
+# userena static file
+- url: /static/userena/css/(.*\.css)
+  mime_type: text/css
+  static_files: static/userena/css/\1
+  upload: static/userena/css/(.*\.css)
+
+- url: /static/userena/img/(.*\.(gif|png|jpg))
+  static_files: static/userena/img/\1
+  upload: static/userena/img/(.*\.(gif|png|jpg))
+
+
+- url: /.*
+  script: bootstrap.application
+  
+  
+libraries:                                                                      
+  - name: jinja2                                                                  
+    version: latest                                                               
+  - name: markupsafe                                                              
+    version: latest  
