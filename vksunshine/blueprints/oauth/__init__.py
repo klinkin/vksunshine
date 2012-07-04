@@ -21,10 +21,7 @@ def get_vkontakte_token():
 
 @bp.route('/login')
 def login():
-    return vkontakte.authorize(callback='http://127.0.0.1:8210/oauth/oauth-authorized')
-#    return vkontakte.authorize(callback=url_for('oauth_authorized',
-#        next=request.args.get('next') or request.referrer or None))
-
+    return vkontakte.authorize(callback=url_for('oauth.oauth_authorized', _external = True, next=request.args.get('next') or request.referrer or None))
 
 @bp.route('/logout')
 def logout():
