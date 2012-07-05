@@ -28,9 +28,10 @@ class Home(View):
                      'access_token':g.user.access_token,
                    }
 
+
             resp = vkontakte.get('users.get', data)
             if resp.status == 200:
-                vk_user_info = resp.data
+                vk_user_info = resp.data['response'][0]
             else:
                 flash('Unable to load userinfo from vkontakte. Maybe out of '
                       'API calls or vkontakte is overloaded.')					
