@@ -19,8 +19,10 @@ class Home(View):
 
     def dispatch_request(self):
         vk_user_info = None
+        vk_user_wall = None
+
         if g.user is not None:
-            data = { 
+            data = {
                      'uids':g.user.user_id, 
                      'fields': 'uid,first_name,last_name,nickname,screen_name,sex,bdate,city,country,timezone,photo,photo_medium,photo_big,has_mobile,rate,contacts,education,online,counters',
                      'access_token':g.user.access_token,
@@ -31,7 +33,19 @@ class Home(View):
                 vk_user_info = resp.data
             else:
                 flash('Unable to load userinfo from vkontakte. Maybe out of '
+                      'API calls or vkontakte is overloaded.')					
+            data = {
+                     'owner_id':g.user.user_id, 
+                     'offset': 0,
+                     'count':10,
+                   }
+
+            resp = vkontakte.get('wall.get', data)
+            if resp.status == 200:
+                vk_user_wall = resp.data
+            else:
+                flash('Unable to load userinfo from vkontakte. Maybe out of '
                       'API calls or vkontakte is overloaded.')
 
-        context = {'user_info': vk_user_info}
+        context = {'user_info': vk_user_info, 'user_wall': vk_user_wall}
         return self.render_template(context)
