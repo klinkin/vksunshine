@@ -1,0 +1,105 @@
+{% from "macros/_link.html" import link_to %}
+{% extends "layout.html" %}
+
+{% block title %}Social Scaner Dashboard{% endblock %}
+
+{% block header %}
+		<!-- Menu Horizontal -->
+		<ul class="menu">
+				<li><a href="">Item 1</a></li>
+				<li><a href="">Item 2</a></li>
+
+				{% if g.user %}
+		        <li class="right"><a href="{{ url_for('oauth.logout') }}"><span class="icon" data-icon="Q"></span>Logout</a>				
+		      	<li class="right current">
+							<a href="{{ url_for('frontend.promo') }}">
+								<span class="icon" data-icon="u"></span>Account [{{ g.user.user_id }}]</a>
+							<ul>
+								<li>
+									<a href="{{ url_for('frontend.news') }}"><span class="icon" data-icon="k"></span>News</a>
+								</li>
+								<li>
+									<a href="{{ url_for('frontend.message') }}"><span class="icon" data-icon="Z"></span>Messages</a>
+								</li>
+							</ul>
+					</li>
+				{% else %}
+		        <li class="right"><a href="{{ url_for('oauth.login') }}"><span class="icon" data-icon="u"></span>Sign-in VK.com</a>
+		    {% endif %}																
+				
+		</ul>
+{% endblock %}
+
+{% block main %}	 
+		<div class="col_12">
+			{% if g.user %}			
+			  <div class="col_3">
+					<img class="align-left" src="{{ user_info['photo_big'] }}" width="200" />
+			  </div>
+					
+			  <div class="col_9">
+					{% if user_info %}				
+						<div id="profile_info">
+							<div class="simple page_top">
+								<h6>{{ user_info.first_name }} {{ user_info.last_name }}  -  {{ user_info.university_name}} ' {{ user_info.graduation}}</h6>
+								<p>{{ user_info.activity }}</p>
+							</div>
+						  <hr/>
+						</div>
+
+						<div class="center">			
+							<h5>Лента новостей - всего записей {{ user_news[0] }}</h5>
+						</div>
+
+            <form id="AddNews" action="/addnews" method="post">
+   						<textarea id="message" name="message" placeholder="Что у вас нового?" style="width: 100%; height: 150px;"></textarea>
+              <button type="submit">Отправить</button>
+            </form>
+
+			    	<ul class="alt">
+			    		{% for news in user_news %}
+			    			{% if news.id %}			
+									<li>{{ news.id }} - {{ news.text }}</li>
+			    			{% endif %}								
+			    		{% endfor %}
+			    	</ul>
+			    {% endif %}
+		    </div>
+			{% endif %}		
+		  </div>	
+			<hr />
+			
+			<div class="col_3">
+			<h4>Column</h4>
+			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
+			magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis</p>
+			</div>
+	
+			<div class="col_3">
+			<h4>Column</h4>
+			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
+			magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis</p>
+			</div>
+	
+			<div class="col_3">
+			<h4>Column</h4>
+			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
+			magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis</p>
+			</div>
+	
+			<div class="col_3">
+			<h4>Column</h4>
+			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
+			magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis</p>
+			</div>
+		</div>
+
+{% endblock %}
+
+{% block footer %}
+		<div class="clear"></div>
+		<div id="footer">
+		&copy; Copyright 2011–2012 All Rights Reserved. This website was built with <a href="http://www.99lime.com">HTML KickStart</a>
+		<a id="link-top" href="#top-of-page">Top</a>
+</div>
+{% endblock %}
