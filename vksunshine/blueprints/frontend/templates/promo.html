@@ -1,3 +1,4 @@
+{% from "macros/_link.html" import link_to %}
 {% extends "layout.html" %}
 
 {% block title %}Social Scaner Dashboard{% endblock %}
@@ -5,64 +6,67 @@
 {% block header %}
 		<!-- Menu Horizontal -->
 		<ul class="menu">
-				<li class="current"><a href="">Item 1</a></li>
+				<li><a href="">Item 1</a></li>
 				<li><a href="">Item 2</a></li>
-				<li><a href=""><span class="icon" data-icon="R"></span>Item 3</a>
-					<ul>
-					<li><a href=""><span class="icon" data-icon="G"></span>Sub Item</a></li>
-					<li><a href=""><span class="icon" data-icon="A"></span>Sub Item</a>
-						<ul>
-						<li><a href=""><span class="icon" data-icon="Z"></span>Sub Item</a></li>
-						<li><a href=""><span class="icon" data-icon="k"></span>Sub Item</a></li>
-						<li><a href=""><span class="icon" data-icon="J"></span>Sub Item</a></li>
-						<li><a href=""><span class="icon" data-icon="="></span>Sub Item</a></li>
-						</ul>
+
+				{% if g.user %}
+		        <li class="right"><a href="{{ url_for('oauth.logout') }}"><span class="icon" data-icon="Q"></span>Logout</a>				
+		      	<li class="right current">
+							<a href="{{ url_for('frontend.promo') }}">
+								<span class="icon" data-icon="u"></span>Account [{{ g.user.user_id }}]</a>
+							<ul>
+								<li>
+									<a href="{{ url_for('frontend.news') }}"><span class="icon" data-icon="k"></span>News</a>
+								</li>
+								<li>
+									<a href="{{ url_for('frontend.message') }}"><span class="icon" data-icon="Z"></span>Messages</a>
+								</li>
+							</ul>
 					</li>
-					<li class="divider"><a href=""><span class="icon" data-icon="T"></span>li.divider</a></li>
-					</ul>
-				</li>
-				<li><a href="">Item 4</a></li>
+				{% else %}
+		        <li class="right current"><a href="{{ url_for('oauth.login') }}"><span class="icon" data-icon="u"></span>Sign-in VK.com</a>
+		    {% endif %}																
+																		
 		</ul>
 {% endblock %}
 
 {% block main %}	 
 		<div class="col_12">
-			<div class="col_9">
-				{% if g.user %}
-					<h3>{{ user_info['first_name'] }} {{ user_info['last_name'] }} </h3>	
-					<p><img class="align-left" src="{{ user_info['photo_big'] }}" width="200" /></p>
-			  {% else %}
-			    <p>
-			      Чтобы увидеть свой профиль необходимо войти на сайт Вконтакте.
-			    <p>
-		      <a href="{{ url_for('oauth.login') }}"><img src="{{
-		        url_for('static', filename='css/img/253978.png') }}" alt="Войти Вконтакте"></a>
-			  {% endif %}
-			</div>
-	
-			<div class="col_3">
-			<h6>Check List</h6>
-			<ul class="checks">
-			<li>tation ullamcorper suscipit lobortis</li>
-			<li>Nam liber tempor cum soluta nobis</li>
-			<li>imperdiet doming id quod mazim</li>
-			<li>suscipit lobortis nisl ut aliquip ex</li>
-			</ul>
-	
-			<h6>Sample Icons</h6>
-			<span class="icon social x-large blue" data-icon="F"></span>
-			<span class="icon social x-large" style="color:orange;" data-icon="5"></span>
-			<span class="icon social x-large darkgray" data-icon="1"></span>
-			<span class="icon social x-large black" data-icon="w"></span>
-			<span class="icon x-large pink" data-icon="*"></span>
-			<span class="icon social x-large green" data-icon="v"></span>
-	
-			<h6>Button w/Icon</h6>
-			<a class="button orange small" href="#"><span class="icon social" data-icon="r"></span> RSS</a>
-			</div>
-	
+			{% if g.user %}			
+			  <div class="col_3">
+					<img class="align-left" src="{{ user_info['photo_big'] }}" width="200" />
+			  </div>
+					
+			  <div class="col_9">
+					{% if user_info %}				
+						<div id="profile_info">
+							<div class="simple page_top">
+								<h6>{{ user_info.first_name }} {{ user_info.last_name }}  -  {{ user_info.university_name}} ' {{ user_info.graduation}}</h6>
+								<p>{{ user_info.activity }}</p>
+							</div>
+						  <hr/>
+							<div id="profile_short">
+								<div class="clear_fix ">
+									<div class="col_4">День рождения:</div>
+									<div class="col_5">{{ user_info.bdate }}</div>
+								</div>
+								<div class="clear_fix miniblock">
+									<div class="col_4">Родной город:</div>
+									<div class="col_5">{{ user_info.bdate }}</div>
+								</div>
+								<div class="clear_fix miniblock">
+									<div class="col_4">Семейное положение:</div>
+									<div class="col_5">{{ user_info.bdate }}</div>									
+								</div>
+							</div>
+						</div>
+
+			    {% endif %}
+		    </div>
+			{% endif %}		
+		  </div>	
 			<hr />
-	
+			
 			<div class="col_3">
 			<h4>Column</h4>
 			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
