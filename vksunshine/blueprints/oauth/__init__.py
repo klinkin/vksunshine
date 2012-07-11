@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import logging
 from flask import Blueprint, request, redirect, url_for, session, flash, g
 from vksunshine.extensions import vkontakte
 from vksunshine.models import User
@@ -21,7 +22,8 @@ def get_vkontakte_token():
 
 @bp.route('/login')
 def login():
-    return vkontakte.authorize(callback=url_for('oauth.oauth_authorized', _external = True, next=request.args.get('next') or request.referrer or None))
+    redirect_uri = url_for('oauth.oauth_authorized', _external = True, next=request.args.get('next') or request.referrer or None)
+    return vkontakte.authorize(callback=redirect_uri)
 
 @bp.route('/logout')
 def logout():
