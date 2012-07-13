@@ -1,9 +1,0 @@
-cron:
-
-- description: Five minute Twitter Live Search
-  url: /crons/tw/5min/
-  schedule: every 5 minutes
-  
-- description: Five minute Vkontakte Live Search
-  url: /crons/vk/5min/
-  schedule: every 5 minutes

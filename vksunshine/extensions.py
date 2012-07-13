@@ -1,16 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask.ext.cache import Cache
 from flask.ext.seasurf import SeaSurf
 from flask.ext.oauth import OAuth
 from vksunshine.config import VK_BASE_URL, VK_ACCESS_TOKEN_URL, VK_AUTHORIZE_URL, \
                               VK_REQUEST_TOKEN_PARAMS, VK_CONSUMER_KEY, VK_CONSUMER_SECRET
 
 
-__all__ = ['cache', 'csrf', 'oauth_manager', 'vkontakte']
+__all__ = ['csrf', 'oauth_manager', 'vkontakte']
 
-cache = Cache()
 csrf = SeaSurf()
 oauth_manager = OAuth()
 

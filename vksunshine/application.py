@@ -3,16 +3,10 @@
 
 import logging
 
-from google.appengine.ext import ereporter
-
-from flask import Flask, Blueprint, flash, g, redirect, render_template, request, session, jsonify, url_for, current_app, make_response
+from flask import Flask, g, redirect, render_template, request, session, jsonify, url_for, make_response
 
 from vksunshine.blueprints import frontend, oauth
-from vksunshine.extensions import cache
-
 from vksunshine.models import User
-
-from vksunshine.helpers import url_for2
 
 __all__ = ["create_app"]
 
@@ -64,7 +58,7 @@ def configure_before_handlers(app):
             g.user = User.get_by_id(session['user_id'])
 
 def configure_extensions(app):
-    cache.init_app(app)
+    pass
 
 
 def configure_context_processors(app):
@@ -79,17 +73,8 @@ def format_exception(tb):
     return res
 
 def configure_jinja(app):
-    app.jinja_env.globals.update(url_for2=url_for2)
-    
     # http://flask.pocoo.org/snippets/74/
     app.jinja_env.exception_formatter = format_exception
-
-    app.jinja_env.variable_start_string = '{{'
-    app.jinja_env.variable_end_string = '}}'
-
-    @app.template_filter()
-    def dateformat(value, format):
-        return format_date(value, format=format)
 		
 def configure_errorhandlers(app):
     @app.errorhandler(404)
@@ -113,7 +98,7 @@ def configure_errorhandlers(app):
     @app.errorhandler(401)
     def unauthorized(error):
         if request.is_xhr:
-            return jsonfiy(error=("Login required"))
+            return jsonify(error=("Login required"))
 #        flash(userena_manager.login_manager.login_message, "error")
 #        return redirect(url_for(userena_manager.login_manager.login_view))
         return redirect(url_for(frontend.promo))
