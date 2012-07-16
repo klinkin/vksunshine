@@ -53,7 +53,7 @@ class Home(View):
         return self.render_template(context)
 
 class News(View):
-
+    methods = ['GET', 'POST']
     def __init__(self, template_name):
         self.template_name = template_name
         self.title = _('User\'s news')
@@ -102,21 +102,9 @@ class AddNews(View):
     def dispatch_request(self):
         result = None
         if g.user is not None:
-            message = request.values.get('message')
-            logging.info("request.values.get('message') = " + str(request.values.get('message')))
-
-            data = {'owner_id':g.user.user_id, 'message': message, 'access_token':g.user.access_token}
-            resp = vkontakte.get('wall.post', data)
-            if resp.status == 200:
-                if resp.data.has_key('response'):
-                    result = resp.data['response']
-                elif resp.data.has_key('error'):
-                    {'error':'Unhandled Exception'}
-                else: 
-                    result = resp.data['error']
-            else:
-                result = {'error':'Unhandled Exception'}
-
+            message = str(request.values .get('message').encode('utf8'))
+            logging.info("request.values.get('message') = " + message)
+            result = {'message':message}
         return jsonify(result)
     
     

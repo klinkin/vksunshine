@@ -23,6 +23,7 @@ def get_vkontakte_token():
 @bp.route('/login')
 def login():
     redirect_uri = url_for('oauth.oauth_authorized', _external = True, next=request.args.get('next') or request.referrer or None)
+    #redirect_uri = 'http://api.vk.com/blank.html'
     return vkontakte.authorize(callback=redirect_uri)
 
 @bp.route('/logout')

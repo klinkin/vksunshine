@@ -40,16 +40,16 @@ SEASURF_INCLUDE_OR_EXEMPT_VIEWS = 'include'
 
 #--------------------VK------------------------------------
 #Production
-#VK_CONSUMER_KEY = '3014832'
-#VK_CONSUMER_SECRET = 'cUkb0LwIs98HoBqqmU6D'
+VK_CONSUMER_KEY = '3014832'
+VK_CONSUMER_SECRET = 'cUkb0LwIs98HoBqqmU6D'
 
 #Local dev
 #VK_CONSUMER_KEY = '3025017'
 #VK_CONSUMER_SECRET = 'PgjrxPjHh00TZ2M8g7k3'
 
 #Local dev desktop
-VK_CONSUMER_KEY = '3033820'
-VK_CONSUMER_SECRET = 'rSsyg52WFN4GVOgqZ1bO'
+#VK_CONSUMER_KEY = '3033820'
+#VK_CONSUMER_SECRET = 'rSsyg52WFN4GVOgqZ1bO'
 
 VK_BASE_URL = 'https://api.vk.com/method/'
 VK_REQUEST_TOKEN_PARAMS = {'display': 'popup', 'scope': 'friends,video,offline'}

@@ -3,16 +3,18 @@ jQuery(document).ready(function($){
 		FORM AJAX Handlers
 	-----------------------------------*/
 	var options = {
+        dataType:      'json',          // dataType identifies the expected content type of the server response 
         target:        '#flashmessage', // target element(s) to be updated with server response 
         beforeSubmit:  showRequest,     // pre-submit callback 
-        success:       showResult,      // post-submit callback
-		type:          'post',
+        success:       showResponse,    // post-submit callback
+        clearForm:     true,            // clear all form fields after successful submit 
+        resetForm:     true             // reset the form after successful submit
+
 	};
 	
-	$('#AddNews').submit(function() {
-		$(this).ajaxSubmit(options);
-		return false;
-	});
+    // bind form using 'ajaxForm' 
+    $('#AddNews').ajaxForm(options);
+
 });
 // pre-submit callback 
 function showRequest(formData, jqForm, options) { 
@@ -29,21 +31,26 @@ function showRequest(formData, jqForm, options) {
     // here we could return false to prevent the form from being submitted; 
     // returning anything other than false will allow the form submit to continue 
     return true; 
-}
-
+} 
+ 
 // post-submit callback 
-function showResult(responseText, statusText, xhr, $form)  { 
+function showResponse(responseText, statusText, xhr, $form)  { 
     // for normal html responses, the first argument to the success callback 
     // is the XMLHttpRequest object's responseText property 
  
-    // if the ajaxSubmit method was passed an Options Object with the dataType 
+    // if the ajaxForm method was passed an Options Object with the dataType 
     // property set to 'xml' then the first argument to the success callback 
     // is the XMLHttpRequest object's responseXML property 
  
-    // if the ajaxSubmit method was passed an Options Object with the dataType 
+    // if the ajaxForm method was passed an Options Object with the dataType 
     // property set to 'json' then the first argument to the success callback 
     // is the json data object returned by the server 
- 
+    VK.api('wall.post', {
+      message: responseText.message,
+      attachments: "photo-442_131166821,http://vk.com/app3025017"
+    }, function(data) { alert(data.response) } );
+
+
     alert('status: ' + statusText + '\n\nresponseText: \n' + responseText + 
         '\n\nThe output div should have already been updated with the responseText.'); 
 }
